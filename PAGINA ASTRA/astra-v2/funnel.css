@@ -1,0 +1,82 @@
+/* =============================================================
+   Funnel v2 — additional components
+   ============================================================= */
+
+.funnel-sub {
+  color: var(--cream-2);
+  max-width: 62ch;
+  font-size: 1.02rem;
+  margin-bottom: 2rem;
+}
+.funnel-note {
+  color: var(--cream-3);
+  font-size: 0.88rem;
+  margin-top: 1rem;
+}
+.section-alt { background: var(--bg-2); }
+
+/* Hero actions (principal + secondary CTA) */
+.hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.6rem; }
+
+/* Categorías grid (Qué puedes importar) */
+.categorias-grid {
+  display: grid; gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) { .categorias-grid { grid-template-columns: repeat(2, 1fr); } }
+.categoria-card {
+  display: block;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: transform .4s var(--ease-soft), border-color .3s;
+}
+.categoria-card:hover { transform: translateY(-4px); border-color: rgba(240,180,0,0.35); }
+.categoria-media { aspect-ratio: 16 / 10; overflow: hidden; }
+.categoria-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease-soft); }
+.categoria-card:hover .categoria-media img { transform: scale(1.06); }
+.categoria-copy { padding: 1.4rem 1.5rem 1.6rem; }
+.categoria-copy h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+.categoria-copy p { color: var(--cream-2); font-size: 0.92rem; }
+
+/* Inline CTA under a steps block */
+.funnel-cta-inline { margin-top: 2.2rem; }
+
+/* Beneficios grid */
+.beneficios-grid {
+  display: grid; gap: 1.5rem;
+  grid-template-columns: 1fr;
+  margin-top: 2.5rem;
+}
+@media (min-width: 640px) { .beneficios-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .beneficios-grid { grid-template-columns: repeat(3, 1fr); } }
+.beneficio-card {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1.8rem 1.6rem;
+}
+.beneficio-icon { display: block; font-size: 2rem; margin-bottom: 1rem; }
+.beneficio-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.beneficio-card p { color: var(--cream-2); font-size: 0.92rem; }
+
+/* Consolidados intro (title-only header before the product sections) */
+.section-consolidados-intro { padding-bottom: 0; }
+.section-consolidados-intro .section-title { margin-bottom: 0.5rem; }
+
+/* Embarque blocks */
+.embarque-block {
+  padding-block: 2rem;
+  border-top: 1px solid var(--line);
+}
+.embarque-block:first-of-type { border-top: none; }
+.embarque-block h3 { font-size: 1.3rem; margin-bottom: 0.8rem; }
+.embarque-block p { color: var(--cream-2); max-width: 68ch; }
+.embarque-steps {
+  list-style: decimal; padding-left: 1.4rem;
+  display: flex; flex-direction: column; gap: 0.6rem;
+  color: var(--cream-2); max-width: 60ch;
+  margin-bottom: 0.5rem;
+}
+.embarque-steps li::marker { color: var(--accent); font-weight: 700; }
