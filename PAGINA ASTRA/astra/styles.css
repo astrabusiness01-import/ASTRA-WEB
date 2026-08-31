@@ -331,13 +331,26 @@ ul { list-style: none; padding: 0; }
 }
 .hero-mesh {
   position: absolute; inset: -10%; z-index: -2;
+  opacity: .8;
+  mix-blend-mode: screen;
+  overflow: hidden;
+}
+.hero-mesh::before {
+  content: "";
+  position: absolute; inset: 0;
   background:
     radial-gradient(55% 45% at var(--mesh-x) var(--mesh-y), rgba(201,151,74,.28), transparent 62%),
     conic-gradient(from var(--mesh-angle), rgba(201,151,74,.14), rgba(143,163,174,.08), rgba(201,151,74,.14));
-  filter: blur(90px) saturate(120%);
-  opacity: .8;
+  filter: blur(55px) saturate(120%);
   animation: meshShift 24s linear infinite;
-  mix-blend-mode: screen;
+  will-change: filter;
+}
+@media (max-width: 768px) {
+  .hero-mesh::before {
+    animation: none;
+    filter: blur(36px) saturate(115%);
+    --mesh-x: 45%; --mesh-y: 40%;
+  }
 }
 @keyframes meshShift {
   0%   { --mesh-angle: 0deg;   --mesh-x: 30%; --mesh-y: 30%; }
@@ -403,6 +416,12 @@ ul { list-style: none; padding: 0; }
   color: var(--bg); background: var(--accent); border-color: var(--accent);
   transform: translateY(-3px);
 }
+.hero-category-highlight {
+  background: var(--accent-grad);
+  color: #140b06 !important;
+  border-color: transparent !important;
+}
+.hero-category-highlight:hover { filter: brightness(1.1); }
 
 .hero-scroll-cue {
   position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
@@ -546,6 +565,8 @@ ul { list-style: none; padding: 0; }
   overflow: hidden;
   scroll-snap-align: start;
   box-shadow: 0 30px 70px -28px rgba(0,0,0,0.55);
+  content-visibility: auto;
+  contain-intrinsic-size: 260px 320px;
 }
 .llegadas-card img {
   width: 100%; height: 100%; object-fit: cover;
