@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tablero · Plataforma ASTRA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #0a0705; --bg-2: #20140a; --gold: #D4A03C; --gold-hi: #F2C46A; --amber: #E8952F;
+    --grad: linear-gradient(135deg, #F2C46A, #D4A03C 45%, #E8952F);
+    --cream: #F4EBDD; --cream-2: #D9CCB6; --cream-3: #9C8D75;
+    --card: rgba(244,235,221,.045); --line: rgba(212,160,60,.22); --line-soft: rgba(244,235,221,.1);
+    --ok: #7cc07a; --warn: #E8952F; --todo: #9C8D75;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Poppins, system-ui, sans-serif; color: var(--cream); background: var(--bg-0) linear-gradient(180deg, var(--bg-0), var(--bg-2)); min-height: 100vh; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 28px 16px 60px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: .5em; font-size: .9rem; }
+  .logo svg { width: 26px; height: 26px; }
+  h1 { font-size: clamp(1.7rem, 5vw, 2.6rem); margin: 26px 0 6px; letter-spacing: -.02em; }
+  h1 span { color: var(--gold-hi); }
+  .sub { color: var(--cream-2); margin: 0 0 22px; max-width: 70ch; }
+  h2 { font-size: 1.15rem; margin: 36px 0 12px; }
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .app { position: relative; padding: 20px; border-radius: 18px; background: var(--card); border: 1px solid var(--line-soft); display: flex; flex-direction: column; gap: 10px; }
+  .app.main { border-color: var(--line); }
+  .top { display: flex; align-items: center; gap: 12px; }
+  .ico { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font-size: 1.3rem; background: rgba(212,160,60,.12); border: 1px solid var(--line); flex: none; }
+  .name { font-weight: 700; font-size: 1.05rem; line-height: 1.2; }
+  .num { font-size: .72rem; color: var(--gold); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+  .desc { color: var(--cream-3); font-size: .9rem; margin: 0; line-height: 1.5; }
+  .row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill { font-size: .72rem; font-weight: 600; padding: .25em .7em; border-radius: 99px; border: 1px solid var(--line-soft); color: var(--cream-2); }
+  .pill.ok { color: var(--ok); border-color: rgba(124,192,122,.4); background: rgba(124,192,122,.08); }
+  .pill.warn { color: var(--warn); border-color: rgba(232,149,47,.45); background: rgba(232,149,47,.08); }
+  .pill.todo { color: var(--todo); border-style: dashed; }
+  .pill.plan { color: #1a0f05; background: var(--grad); border: 0; }
+  dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; font-size: .82rem; }
+  dt { color: var(--cream-3); }
+  dd { margin: 0; color: var(--cream-2); word-break: break-word; }
+  dd code { font-family: ui-monospace, Menlo, monospace; font-size: .78rem; }
+  a { color: var(--gold-hi); }
+  .note { margin-top: 30px; padding: 16px 18px; border-radius: 14px; border: 1px solid var(--line); border-left: 4px solid var(--gold); background: rgba(212,160,60,.07); color: var(--cream-2); font-size: .92rem; }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  th { background: var(--grad); color: #1a0f05; text-align: left; padding: 10px 12px; }
+  td { padding: 10px 12px; border-top: 1px solid var(--line-soft); color: var(--cream-2); }
+  td.c { text-align: center; }
+  .table-wrap { overflow-x: auto; border-radius: 14px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F2C46A"/><stop offset="1" stop-color="#E8952F"/></linearGradient></defs><symbol id="star" viewBox="0 0 24 24"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z" fill="none" stroke="url(#g)" stroke-width="1.6" stroke-linejoin="round"/></symbol></svg>
+<div class="wrap">
+  <div class="logo"><svg><use href="#star"/></svg>ASTRA</div>
+  <h1>Tablero de la <span>plataforma ASTRA</span></h1>
+  <p class="sub">Tus micro apps en un solo lugar: qué hace cada una, dónde está su carpeta, su link y qué programa la incluye. Se edita en la lista <code>APPS</code> al final de este archivo.</p>
+
+  <h2>Micro apps de la plataforma</h2>
+  <div class="grid" id="apps"></div>
+
+  <h2>¿Qué incluye cada programa?</h2>
+  <div class="table-wrap"><table id="matrix"></table></div>
+
+  <h2>Otros proyectos ASTRA (no son micro apps)</h2>
+  <div class="grid" id="otros"></div>
+
+  <div class="note"><b>Siguiente paso:</b> convertir este tablero en la plataforma con usuarios, con login para cada alumno y un panel donde activas qué micro apps tiene cada uno. El plan está en <code>PLAN-PLATAFORMA.md</code>. La primera versión del hub ya está en <a href="index.html">index.html</a>.</div>
+</div>
+
+<script>
+// ===== Edita aquí tus micro apps =====
+const APPS = [
+  { n: 1, icon: "🛍️", name: "Catálogo de productos", desc: "Productos con fotos y precios, filtros y carrito que envía el pedido por WhatsApp.",
+    estado: "Publicada", url: "https://pagina-consolidado-perfumes.vercel.app", carpeta: "Documents/PAGINA CONSOLIDADO PERFUMES",
+    repo: "GitHub: astra-pefumes-consolidado-pagina", planes: ["STAR-T (opción)", "1v1"] },
+  { n: 2, icon: "📋", name: "Gestión de clientes", desc: "FUSIONES ASTRA: clientes, recojos, consolidados, liquidación por cliente y panel creador.",
+    estado: "Publicada", url: "https://fusiones-astra.vercel.app", carpeta: "Documents/FUSION  (termina en espacio)",
+    repo: "GitHub privado: fusiones-astra", planes: ["STAR-T (opción)", "1v1"] },
+  { n: 3, icon: "🧮", name: "Cotizador de courier", desc: "Calcula cuánto cuesta traer compras de USA a Perú: US$10/kg, desaduanaje y 24% si pasa de $200.",
+    estado: "Sin publicar", url: "", carpeta: "Documents/PAGINA COTIZADORA", repo: "—", planes: ["1v1"] },
+  { n: 4, icon: "✨", name: "Micro app 4", desc: "Por definir.", estado: "Por definir", url: "", carpeta: "—", repo: "—", planes: ["1v1"] },
+  { n: 5, icon: "✨", name: "Micro app 5", desc: "Por definir.", estado: "Por definir", url: "", carpeta: "—", repo: "—", planes: ["1v1"] },
+];
+const OTROS = [
+  { icon: "🌐", name: "Web principal ASTRA", url: "https://astra-web-sage.vercel.app", carpeta: "Documents/PAGINA ASTRA/astra" },
+  { icon: "⭐", name: "Página de venta (Kit / STAR-T / 1v1)", url: "https://astra-programas.vercel.app/programas/", carpeta: "Documents/PAGINA LANDING ASTRA" },
+  { icon: "📘", name: "Kit Mi Primera Importación (PDF)", url: "", carpeta: "Documents/KIT MI PRIMERA IMPORTACION" },
+  { icon: "🧴", name: "Cotizador de perfumes", url: "https://astra-cotizador-perfumes.vercel.app", carpeta: "Documents/GitHub/astra-cotizador-perfumes", nota: "¿Candidata a micro app 4?" },
+  { icon: "🚚", name: "Guía SKAY Courier (Grupo VIP)", url: "https://skay-pagina-guia-courier.vercel.app", carpeta: "Documents/PAGINA DIRECCIONES SKAY COURIER", nota: "Otra marca" },
+];
+// =====================================
+const cls = e => e === "Publicada" ? "ok" : e === "Sin publicar" ? "warn" : "todo";
+const link = u => u ? `<a href="${u}" target="_blank" rel="noopener">${u.replace("https://", "")}</a>` : "—";
+document.getElementById("apps").innerHTML = APPS.map(a => `
+  <article class="app ${a.estado === "Publicada" ? "main" : ""}">
+    <div class="top"><div class="ico">${a.icon}</div><div><div class="num">Micro app ${a.n}</div><div class="name">${a.name}</div></div></div>
+    <p class="desc">${a.desc}</p>
+    <div class="row"><span class="pill ${cls(a.estado)}">${a.estado}</span>${a.planes.map(p => `<span class="pill plan">${p}</span>`).join("")}</div>
+    <dl><dt>Link</dt><dd>${link(a.url)}</dd><dt>Carpeta</dt><dd><code>${a.carpeta}</code></dd><dt>Código</dt><dd>${a.repo}</dd></dl>
+  </article>`).join("");
+document.getElementById("matrix").innerHTML = `
+  <tr><th>Micro app</th><th>Kit</th><th>STAR-T</th><th>1v1</th></tr>` +
+  APPS.map(a => `<tr><td>${a.icon} ${a.name}</td><td class="c">—</td>
+    <td class="c">${a.planes.includes("STAR-T (opción)") ? "Elige 1" : "—"}</td>
+    <td class="c">✓</td></tr>`).join("");
+document.getElementById("otros").innerHTML = OTROS.map(o => `
+  <article class="app">
+    <div class="top"><div class="ico">${o.icon}</div><div class="name">${o.name}</div></div>
+    ${o.nota ? `<div class="row"><span class="pill todo">${o.nota}</span></div>` : ""}
+    <dl><dt>Link</dt><dd>${link(o.url)}</dd><dt>Carpeta</dt><dd><code>${o.carpeta}</code></dd></dl>
+  </article>`).join("");
+</script>
+</body>
+</html>
