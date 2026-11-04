@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://astra-web.astra-negocios.workers.dev/sitemap.xml
